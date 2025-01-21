@@ -20,14 +20,16 @@ services:
     volumes:
       - backend_node_modules:/workspace/backend/node_modules
       - .:/workspace
+    environment:
+      DATABASE_URL: mysql://root:${MYSQL_ROOT_PASSWORD}@db:3306/${MYSQL_DATABASE}
 
   db:
     image: mysql
     environment:
-      MYSQL_ROOT_PASSWORD: rootpass
-      MYSQL_DATABASE: wecall
-      MYSQL_USER: user
-      MYSQL_PASSWORD: userpass
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      # MYSQL_USER: ${MYSQL_USER}
+      # MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - 3306:3306
     networks:
