@@ -3,29 +3,36 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useFormStore = defineStore('form-store', () => {
-  const formData = ref<Entry>({
+  const entryData = ref<Entry>({
     name: '',
     gender: '',
     birthday: '',
     prefecture: '',
     tel: '',
     email: '',
-    is_accompanied: '',
-    visit_day: '',
-    visit_time: '',
+    isAccompanied: '',
+    visitDay: '',
+    visitTime: '',
   })
 
-  function pushToFormData(submittedData: Entry) {
-    formData.value = submittedData
-    console.log(formData.value)
-  }
-
-  const entryData = ref<Entry[]>([])
-
-  function pushToEntryData() {
-    entryData.value.push(formData.value)
+  function saveEntryData(submittedData: Entry) {
+    entryData.value = submittedData
     console.log(entryData.value)
   }
 
-  return { formData, pushToFormData, entryData, pushToEntryData }
+  function getEntryData() {
+    entryData.value = {
+      name: '山田太郎',
+      gender: '男性',
+      birthday: '1994年4月23日',
+      prefecture: '東京都',
+      tel: '09012345678',
+      email: 'xxxxxx@xxxxxx.co.jp',
+      isAccompanied: 'あり',
+      visitDay: '2025年1月1日(水)',
+      visitTime: '14:00',
+    }
+  }
+
+  return { entryData, saveEntryData, getEntryData }
 })
