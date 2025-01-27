@@ -13,7 +13,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <PageTitle :title="'予約内容の確認'" :message="''" />
+  <PageTitle title="予約内容の確認" message="" />
   <ConfirmationContentDisplay />
 
   <RouterLinkButton to="/entrychange"> 予約内容を変更する </RouterLinkButton>

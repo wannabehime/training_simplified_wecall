@@ -27,7 +27,7 @@ const changedData = {
 </script>
 
 <template>
-  <PageTitle :title="'日程変更'" :message="'入力内容を変更'" />
+  <PageTitle title="日程変更" message="入力内容を変更" />
 
   <CompanionField v-model="changedData.isAccompanied" />
   <CalendarDateField v-model="changedData.visitDay" />

@@ -6,7 +6,7 @@ import RouterLinkButton from '@/components/atoms/Button/RouterLinkButton.vue';
 </script>
 
 <template>
-  <PageTitle :title="'入力内容確認画面'" :message="'以下の内容で変更しますか？'" />
+  <PageTitle title="入力内容確認画面" message="以下の内容で変更しますか？" />
   <ConfirmationContentDisplay />
 
   <RouterLinkButton to="/entrychange/complete">

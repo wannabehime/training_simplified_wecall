@@ -5,7 +5,7 @@ import PageTitle from '@/components/PageTitle.vue'
 </script>
 
 <template>
-  <PageTitle :title="'予約完了'" :message="''" />
+  <PageTitle title="予約完了" message="" />
   <p>ご予約が完了しました。LINEのトークルームにご予約情報をお送りしておりますのでご確認ください。</p>
   <RouterLinkButton to=""> 閉じる </RouterLinkButton>
 </template>
