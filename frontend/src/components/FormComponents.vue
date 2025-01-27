@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { Entry } from '@/types/entry'
-import { ref } from 'vue'
 import { useFormStore } from '@/stores/formStore'
 
 import GenderField from '@/components/fields/Gender/GenderField.vue'
@@ -17,28 +15,38 @@ import RouterLinkButton from './atoms/Button/RouterLinkButton.vue'
 import NameField from './fields/Name/NameField.vue'
 
 const formStore = useFormStore()
-const pushToFormData = formStore.pushToFormData
-const formData = formStore.formData
+const saveEntryData = formStore.saveEntryData
+const entryData = {
+  name: '',
+  gender: '',
+  birthday: '',
+  prefecture: '',
+  tel: '',
+  email: '',
+  isAccompanied: '',
+  visitDay: '',
+  visitTime: '',
+}
 </script>
 
 <template>
-  <NameField v-model="formData.name" />
-  <GenderField v-model="formData.gender" />
-  <BirthdayField v-model="formData.birthday" />
-  <PrefectureField v-model="formData.prefecture" />
-  <PhoneField v-model="formData.tel" />
-  <EmailField v-model="formData.email" />
+  <NameField v-model="entryData.name" />
+  <GenderField v-model="entryData.gender" />
+  <BirthdayField v-model="entryData.birthday" />
+  <PrefectureField v-model="entryData.prefecture" />
+  <PhoneField v-model="entryData.tel" />
+  <EmailField v-model="entryData.email" />
 
   <hr />
 
-  <CompanionField v-model="formData.is_accompanied" />
-  <CalendarDateField v-model="formData.visit_day" />
-  <CalendarTimeField v-model="formData.visit_time" />
+  <CompanionField v-model="entryData.isAccompanied" />
+  <CalendarDateField v-model="entryData.visitDay" />
+  <CalendarTimeField v-model="entryData.visitTime" />
 
   <PrivacyField />
   <TermsField />
 
-  <RouterLinkButton to="/entry/confirm" @click-event="pushToFormData(formData)">
+  <RouterLinkButton to="/entry/confirm" @click-event="saveEntryData(entryData)">
     入力内容確認画面へ
   </RouterLinkButton>
   <RouterLinkButton to=""> 戻る </RouterLinkButton>

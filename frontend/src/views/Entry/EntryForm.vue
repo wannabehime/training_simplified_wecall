@@ -5,6 +5,6 @@ import FormComponents from '@/components/FormComponents.vue'
 </script>
 
 <template>
-  <PageTitle :title="'ご予約フォーム'" :message="'お客様情報を入力'" />
+  <PageTitle title="ご予約フォーム" message="お客様情報を入力" />
   <FormComponents />
 </template>

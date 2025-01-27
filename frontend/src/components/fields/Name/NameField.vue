@@ -5,5 +5,5 @@ const model = defineModel<string>()
 </script>
 
 <template>
-  <TextInput :label="'お名前'" v-model="model" />
+  <TextInput label="お名前" v-model="model" />
 </template>

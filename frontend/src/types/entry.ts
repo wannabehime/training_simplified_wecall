@@ -5,7 +5,7 @@ export interface Entry {
   prefecture: string
   tel: string
   email: string
-  is_accompanied: string
-  visit_day: string
-  visit_time: string
+  isAccompanied: string
+  visitDay: string
+  visitTime: string
 }

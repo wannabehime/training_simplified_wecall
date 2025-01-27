@@ -7,8 +7,8 @@ const model = defineModel<string>()
 <template>
   <fieldset>
     <legend>性別</legend>
-    <RadioButton name="gender" :value="'男性'" v-model="model"/>
-    <RadioButton name="gender" :value="'女性'" v-model="model"/>
-    <RadioButton name="gender" :value="'その他'" v-model="model"/>
+    <RadioButton name="gender" value="男性" v-model="model"/>
+    <RadioButton name="gender" value="女性" v-model="model"/>
+    <RadioButton name="gender" value="その他" v-model="model"/>
   </fieldset>
 </template>
