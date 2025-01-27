@@ -17,7 +17,21 @@ export const useFormStore = defineStore('form-store', () => {
 
   function saveEntryData(submittedData: Entry) {
     entryData.value = submittedData
-    console.log(entryData.value)
+    // console.log(entryData.value)
+  }
+
+  function deleteEntryData() {
+    entryData.value = {
+      name: '',
+      gender: '',
+      birthday: '',
+      prefecture: '',
+      tel: '',
+      email: '',
+      isAccompanied: '',
+      visitDay: '',
+      visitTime: '',
+    }
   }
 
   function getEntryData() {
@@ -34,5 +48,5 @@ export const useFormStore = defineStore('form-store', () => {
     }
   }
 
-  return { entryData, saveEntryData, getEntryData }
+  return { entryData, saveEntryData, deleteEntryData, getEntryData }
 })

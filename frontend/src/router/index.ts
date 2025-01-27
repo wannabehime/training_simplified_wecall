@@ -6,6 +6,8 @@ import EntryFormCompletion from '@/views/Entry/EntryFormCompletion.vue'
 import EntryConfirmation from '@/views/EntryChange/EntryConfirmation.vue'
 import EntryChangeFormConfirmation from '@/views/EntryChange/EntryChangeFormConfirmation.vue'
 import EntryChangeFormCompletion from '@/views/EntryChange/EntryChangeFormCompletion.vue'
+import EntryCancelConfirmation from '@/views/EntryCancel/EntryCancelConfirmation.vue'
+import EntryCancelCompletion from '@/views/EntryCancel/EntryCancelCompletion.vue'
 
 const routes = [
   {
@@ -42,6 +44,16 @@ const routes = [
     path: '/entrychange/complete',
     name: 'entry-change-form-completion-view',
     component: EntryChangeFormCompletion,
+  },
+  {
+    path: '/entrycancel/confirm',
+    name: 'entry-cancel-confirmation-view',
+    component: EntryCancelConfirmation,
+  },
+  {
+    path: '/entrycancel/complete',
+    name: 'entry-cancel-completion-view',
+    component: EntryCancelCompletion,
   },
 ]
 
