@@ -7,18 +7,38 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Entries {
+model Visitors {
   id                Int              @id @default(autoincrement())
   familyName        String
   personalName      String
   familyNameKana    String
   personalNameKana  String
-  gender            String
-  birthDay          DateTime
+  gender            Gender
+  birthDate         DateTime
   prefecture        String
-  tel               String
+  phoneNumber       String
   email             String
   isAccompanied     Boolean
-  visitDate         DateTime
   checkinTime       DateTime?
+  reservationSlotId Int
+  reservationSlot   ReservationSlots @relation(fields: [reservationSlotId], references: [id])
+
+  @@index([reservationSlotId], map: "Visitors_reservationSlotId_fkey")
+}
+
+model ReservationSlots {
+  id              Int        @id @default(autoincrement())
+  reservationDate DateTime
+  reservationTime DateTime
+  maxSlot         Int
+  reservedSlot    Int
+  reservableSlot  Int
+  isReservable    Boolean
+  Visitors        Visitors[]
+}
+
+enum Gender {
+  man
+  woman
+  other
 }
