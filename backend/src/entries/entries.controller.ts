@@ -2,6 +2,7 @@ import { EntriesService } from './entries.service';
 import {
   Body,
   Controller,
+  Delete,
   Get,
   NotFoundException,
   Param,
@@ -37,5 +38,10 @@ export class EntriesController {
     @Body() entry: UpdateEntryDto,
   ): Promise<EntryDto> {
     return await this.entriesService.updateEntry(id, entry);
+  }
+
+  @Delete(':id')
+  async deleteEntry(@Param('id', ParseIntPipe) id: number): Promise<EntryDto> {
+    return await this.entriesService.deleteEntry(id);
   }
 }

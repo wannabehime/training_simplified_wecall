@@ -55,4 +55,10 @@ export class EntriesService {
       },
     });
   }
+
+  async deleteEntry(id: number): Promise<EntryDto> {
+    return this.prisma.entries.delete({
+      where: { id },
+    });
+  }
 }
