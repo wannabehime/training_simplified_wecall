@@ -6,10 +6,12 @@ import {
   NotFoundException,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
 } from '@nestjs/common';
 import { EntryDto } from './dto/entry.dto';
 import { AddEntryDto } from './dto/add-entry.dto';
+import { UpdateEntryDto } from './dto/update-entry.dto';
 
 @Controller('entries')
 export class EntriesController {
@@ -27,5 +29,13 @@ export class EntriesController {
   @Post()
   async addEntry(@Body() entry: AddEntryDto): Promise<EntryDto> {
     return await this.entriesService.addEntry(entry);
+  }
+
+  @Patch(':id')
+  async updateEntry(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() entry: UpdateEntryDto,
+  ): Promise<EntryDto> {
+    return await this.entriesService.updateEntry(id, entry);
   }
 }
