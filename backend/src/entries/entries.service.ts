@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { EntryDto } from './dto/entry.dto';
+import { AddEntryDto } from './dto/add-entry.dto';
 
 @Injectable()
 export class EntriesService {
@@ -23,5 +24,23 @@ export class EntriesService {
         visitDate: true,
       },
     });
+  }
+
+  async addEntry(entry: AddEntryDto): Promise<EntryDto> {
+    const data = {
+      familyName: entry.familyName,
+      personalName: entry.personalName,
+      familyNameKana: entry.familyNameKana,
+      personalNameKana: entry.personalNameKana,
+      gender: entry.gender,
+      birthDay: new Date(entry.birthDay),
+      prefecture: entry.prefecture,
+      tel: entry.tel,
+      email: entry.email,
+      isAccompanied: entry.isAccompanied,
+      visitDate: new Date(entry.visitDate),
+    };
+
+    return this.prisma.entries.create({ data });
   }
 }
