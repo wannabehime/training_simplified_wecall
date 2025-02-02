@@ -1,4 +1,4 @@
-import type { Entry, EntryReturnedByAPI } from '@/types/entry'
+import type { Entry, EntryReturnedByAPI, updatedEntryProperties } from '@/types/entry'
 
 export function useEntriesAPI() {
   class EntryGetFailure extends Error {
@@ -40,8 +40,29 @@ export function useEntriesAPI() {
     }
   }
 
+  class EntryUpdateFailure extends Error {
+    constructor() {
+      super()
+    }
+  }
+
+  const useUpdateEntryAPI = async (id: number, properties: updatedEntryProperties) => {
+    const response = await fetch(`http://localhost:3000/entries/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(properties),
+    })
+
+    if (!response.ok) {
+      throw new EntryUpdateFailure()
+    }
+  }
+
   return {
     useGetEntryAPI,
     useAddEntryAPI,
+    useUpdateEntryAPI,
   }
 }

@@ -1,9 +1,13 @@
-import type { Entry, EntryReturnedByAPI } from '@/types/entry'
+import type { Entry, EntryReturnedByAPI, updatedEntryProperties } from '@/types/entry'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { useEntriesAPI } from '@/composables/useEntriesAPI'
 
-const { useAddEntryAPI: useAddEntryAPI, useGetEntryAPI: useGetEntryAPI } = useEntriesAPI()
+const {
+  useGetEntryAPI: useGetEntryAPI,
+  useAddEntryAPI: useAddEntryAPI,
+  useUpdateEntryAPI: useUpdateEntryAPI,
+} = useEntriesAPI()
 
 export const useEntryStore = defineStore('entry-store', () => {
   const entryData = ref<Entry>({
@@ -42,6 +46,16 @@ export const useEntryStore = defineStore('entry-store', () => {
     }
   }
 
+  async function changeEntry(id: number, changedProperties: updatedEntryProperties) {
+    try {
+      if ((await useGetEntryAPI(id)) !== null) {
+        await useUpdateEntryAPI(id, changedProperties)
+      }
+    } catch (error) {
+      if (error) errorMsg.value = 'サーバーエラーにより予約できませんでした'
+    }
+  }
+
   function saveEntryToStore(entry: Entry) {
     entryData.value = entry
   }
@@ -60,5 +74,5 @@ export const useEntryStore = defineStore('entry-store', () => {
     }
   }
 
-  return { entryData, registerEntry, saveEntryToStore, deleteEntryData, getEntry }
+  return { entryData, registerEntry, saveEntryToStore, deleteEntryData, getEntry, changeEntry }
 })

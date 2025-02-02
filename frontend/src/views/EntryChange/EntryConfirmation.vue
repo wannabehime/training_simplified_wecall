@@ -11,11 +11,27 @@ const { getEntry, saveEntryToStore } = useEntryStore()
 
 onMounted(async () => {
   const registeredEntry = await getEntry(12)
-  const formattedEntry = {
-    ...registeredEntry,
-    birthday: format(registeredEntry.birthday, 'yyyy年M月d日'),
-    isAccompanied: registeredEntry.isAccompanied ? 'あり' : 'なし',
-    visitDay: format(registeredEntry.visitDay, 'yyyy年M月d日(EEE)', { locale: ja }),
+  let formattedEntry = {
+    familyName: '',
+      personalName: '',
+      familyNameKana: '',
+      personalNameKana: '',
+      gender: '',
+      birthday: '',
+      prefecture: '',
+      tel: '',
+      email: '',
+      isAccompanied: '',
+      visitDay: '',
+      visitTime: '',
+  }
+  if (registeredEntry !== null) {
+    formattedEntry = {
+      ...registeredEntry,
+      birthday: format(registeredEntry.birthday, 'yyyy年MM月dd日'),
+      isAccompanied: registeredEntry.isAccompanied ? 'あり' : 'なし',
+      visitDay: format(registeredEntry.visitDay, 'yyyy年MM月dd日(EEE)', { locale: ja }),
+    }
   }
   saveEntryToStore(formattedEntry)
 })
