@@ -3,9 +3,9 @@ import PageTitle from '@/components/PageTitle.vue'
 import RouterLinkButton from '@/components/atoms/Button/RouterLinkButton.vue'
 import ConfirmationContentDisplay from '@/components/ConfirmationContentDisplay.vue'
 import { onMounted } from 'vue'
-import { useFormStore } from '@/stores/formStore'
+import { useEntryStore } from '@/stores/entryStore'
 
-const { getEntryData } = useFormStore()
+const { getEntryData } = useEntryStore()
 
 onMounted(() => {
   getEntryData()

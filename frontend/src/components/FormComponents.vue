@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useFormStore } from '@/stores/formStore'
+import { useEntryStore } from '@/stores/entryStore'
 
 import GenderField from '@/components/fields/Gender/GenderField.vue'
 import BirthdayField from '@/components/fields/Birthday/BirthdayField.vue'
@@ -13,11 +13,15 @@ import PrivacyField from '@/components/fields/Agreement/PrivacyField.vue'
 import TermsField from '@/components/fields/Agreement/TermsField.vue'
 import RouterLinkButton from './atoms/Button/RouterLinkButton.vue'
 import NameField from './fields/Name/NameField.vue'
+import NameKanaField from './fields/Name/NameKanaField.vue'
 
-const formStore = useFormStore()
-const saveEntryData = formStore.saveEntryData
+const entryStore = useEntryStore()
+const saveEntryToStore = entryStore.saveEntryToStore
 const entryData = {
-  name: '',
+  familyName: '',
+  personalName: '',
+  familyNameKana: '',
+  personalNameKana: '',
   gender: '',
   birthday: '',
   prefecture: '',
@@ -30,7 +34,14 @@ const entryData = {
 </script>
 
 <template>
-  <NameField v-model="entryData.name" />
+  <NameField
+    v-model:familyName="entryData.familyName"
+    v-model:personalName="entryData.personalName"
+  />
+  <NameKanaField
+    v-model:familyNameKana="entryData.familyNameKana"
+    v-model:personalNameKana="entryData.personalNameKana"
+  />
   <GenderField v-model="entryData.gender" />
   <BirthdayField v-model="entryData.birthday" />
   <PrefectureField v-model="entryData.prefecture" />
@@ -46,7 +57,7 @@ const entryData = {
   <PrivacyField />
   <TermsField />
 
-  <RouterLinkButton to="/entry/confirm" @click-event="saveEntryData(entryData)">
+  <RouterLinkButton to="/entry/confirm" @click-event="saveEntryToStore(entryData)">
     入力内容確認画面へ
   </RouterLinkButton>
   <RouterLinkButton to=""> 戻る </RouterLinkButton>

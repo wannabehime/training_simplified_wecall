@@ -1,15 +1,16 @@
-import { IsNotEmpty, IsBoolean, IsString } from 'class-validator';
+import { IsNotEmpty, IsString, IsIn } from 'class-validator';
 
 export class UpdateEntryDto {
   @IsNotEmpty()
-  @IsBoolean()
-  isAccompanied: boolean;
+  @IsString()
+  @IsIn(['あり', 'なし'])
+  isAccompanied: string;
 
   @IsNotEmpty()
   @IsString()
-  birthDay: string;
+  visitDay: string;
 
   @IsNotEmpty()
   @IsString()
-  visitDate: string;
+  visitTime: string;
 }

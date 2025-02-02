@@ -4,11 +4,11 @@ import CompanionField from '@/components/fields/Companion/CompanionField.vue'
 import CalendarDateField from '@/components/fields/Calendar/CalendarDateField.vue'
 import CalendarTimeField from '@/components/fields/Calendar/CalendarTimeField.vue'
 import RouterLinkButton from '@/components/atoms/Button/RouterLinkButton.vue'
-import { useFormStore } from '@/stores/formStore'
+import { useEntryStore } from '@/stores/entryStore'
 // import { ref } from 'vue'
 // import { storeToRefs } from 'pinia'
 
-const { entryData, saveEntryData } = useFormStore()
+const { entryData, saveEntryData } = useEntryStore()
 
 // const isAccompanied = ref<string>('')
 // const visitDay = ref<string>('')

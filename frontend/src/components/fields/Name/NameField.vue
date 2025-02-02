@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import TextInput from '@/components/atoms/TextInput.vue'
 
-const model = defineModel<string>()
+const familyName = defineModel<string>('familyName')
+const personalName = defineModel<string>('personalName')
 </script>
 
 <template>
-  <TextInput label="お名前" v-model="model" />
+  <TextInput label="姓" v-model="familyName" />
+  <TextInput label="名" v-model="personalName" />
 </template>

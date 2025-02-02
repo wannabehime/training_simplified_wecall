@@ -1,14 +1,24 @@
 <script setup lang="ts">
-import { useFormStore } from '@/stores/formStore'
+import { useEntryStore } from '@/stores/entryStore'
 import { storeToRefs } from 'pinia'
 
-const { entryData } = storeToRefs(useFormStore())
+const { entryData } = storeToRefs(useEntryStore())
 </script>
 
 <template>
   <div>
     <p>お名前</p>
-    <p>{{ entryData.name }}</p>
+    <p>
+      {{
+        entryData.familyName +
+        ' ' +
+        entryData.personalName +
+        ' ' +
+        entryData.familyNameKana +
+        ' ' +
+        entryData.personalNameKana
+      }}
+    </p>
   </div>
   <div>
     <p>性別</p>
