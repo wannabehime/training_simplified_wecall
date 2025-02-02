@@ -33,7 +33,7 @@ const changedData = {
   <CalendarDateField v-model="changedData.visitDay" />
   <CalendarTimeField v-model="changedData.visitTime" />
 
-  <RouterLinkButton to="/entrychange/confirm" @click-event="saveEntryData(changedData)">
+  <RouterLinkButton to="/entry/change/confirm" @click-event="saveEntryData(changedData)">
     入力内容確認画面へ
   </RouterLinkButton>
   <RouterLinkButton to="/confirm"> 戻る </RouterLinkButton>

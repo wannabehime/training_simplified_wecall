@@ -9,8 +9,8 @@ import RouterLinkButton from '@/components/atoms/Button/RouterLinkButton.vue';
   <PageTitle title="入力内容確認画面" message="以下の内容で変更しますか？" />
   <ConfirmationContentDisplay />
 
-  <RouterLinkButton to="/entrychange/complete">
+  <RouterLinkButton to="/entry/change/complete">
     予約内容を変更する
   </RouterLinkButton>
-  <RouterLinkButton to="/entrychange"> 内容を修正する </RouterLinkButton>
+  <RouterLinkButton to="/entry/change"> 内容を修正する </RouterLinkButton>
 </template>

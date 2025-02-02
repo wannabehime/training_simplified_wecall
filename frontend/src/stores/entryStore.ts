@@ -1,9 +1,9 @@
-import type { Entry } from '@/types/entry'
+import type { Entry, EntryReturnedByAPI } from '@/types/entry'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { useEntriesAPI } from '@/composables/useEntriesAPI'
 
-const { useAddEntryAPI: useAddEntryAPI } = useEntriesAPI()
+const { useAddEntryAPI: useAddEntryAPI, useGetEntryAPI: useGetEntryAPI } = useEntriesAPI()
 
 export const useEntryStore = defineStore('entry-store', () => {
   const entryData = ref<Entry>({
@@ -23,8 +23,17 @@ export const useEntryStore = defineStore('entry-store', () => {
 
   const errorMsg = ref<string>()
 
+  async function getEntry(id: number): Promise<EntryReturnedByAPI | null> {
+    try {
+      return await useGetEntryAPI(id)
+    } catch (error) {
+      if (error) errorMsg.value = '該当データを取得できませんでした'
+      return null
+    }
+  }
+
   async function registerEntry(submittedEntry: Entry) {
-    console.log(submittedEntry)
+    // console.log(submittedEntry)
     try {
       await useAddEntryAPI(submittedEntry)
     } catch (error) {
@@ -51,19 +60,5 @@ export const useEntryStore = defineStore('entry-store', () => {
     }
   }
 
-  function getEntryData() {
-    entryData.value = {
-      name: '山田太郎',
-      gender: '男性',
-      birthday: '1994年4月23日',
-      prefecture: '東京都',
-      tel: '09012345678',
-      email: 'xxxxxx@xxxxxx.co.jp',
-      isAccompanied: 'あり',
-      visitDay: '2025年1月1日(水)',
-      visitTime: '14:00',
-    }
-  }
-
-  return { entryData, registerEntry, saveEntryToStore, deleteEntryData, getEntryData }
+  return { entryData, registerEntry, saveEntryToStore, deleteEntryData, getEntry }
 })
