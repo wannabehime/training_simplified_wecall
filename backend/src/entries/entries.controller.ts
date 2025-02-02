@@ -29,7 +29,6 @@ export class EntriesController {
 
   @Post()
   async addEntry(@Body() entry: AddEntryDto): Promise<EntryDto> {
-    console.log('届いてる');
     return await this.entriesService.addEntry(entry);
   }
 

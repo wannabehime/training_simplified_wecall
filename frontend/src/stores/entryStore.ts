@@ -63,7 +63,9 @@ export const useEntryStore = defineStore('entry-store', () => {
 
   async function cancelEntry(id: number) {
     try {
-      await useDeleteEntryAPI(id)
+      if ((await useGetEntryAPI(id)) !== null) {
+        await useDeleteEntryAPI(id)
+      }
     } catch (error) {
       if (error) errorMsg.value = 'サーバーエラーによりキャンセルできませんでした'
     }

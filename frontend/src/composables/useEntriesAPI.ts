@@ -25,7 +25,6 @@ export function useEntriesAPI() {
   }
 
   const useAddEntryAPI = async (entry: Entry) => {
-    // console.log(JSON.stringify(entry))
     const response = await fetch('http://localhost:3000/entries', {
       method: 'POST',
       headers: {
@@ -35,7 +34,6 @@ export function useEntriesAPI() {
     })
 
     if (!response.ok) {
-      // console.log(response)
       throw new EntryAddFailure()
     }
   }
