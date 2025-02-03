@@ -10,7 +10,7 @@ import { ja } from 'date-fns/locale'
 const { getEntry, saveEntryToStore, cancelEntry } = useEntryStore()
 
 onMounted(async () => {
-  const registeredEntry = await getEntry(12)
+  const registeredEntry = await getEntry(13)
   let formattedEntry = {
     familyName: '',
       personalName: '',
@@ -41,7 +41,7 @@ onMounted(async () => {
   <PageTitle title="予約キャンセル" message="以下の内容をキャンセルしますか？" />
   <ConfirmationContentDisplay />
 
-  <RouterLinkButton to="/entry/cancel/complete" @click-event="cancelEntry(12)">
+  <RouterLinkButton to="/entry/cancel/complete" @click-event="cancelEntry(13)">
     予約をキャンセルする
   </RouterLinkButton>
   <RouterLinkButton to=""> 閉じる </RouterLinkButton>

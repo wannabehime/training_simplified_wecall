@@ -10,7 +10,7 @@ import { ja } from 'date-fns/locale'
 const { getEntry, saveEntryToStore } = useEntryStore()
 
 onMounted(async () => {
-  const registeredEntry = await getEntry(12)
+  const registeredEntry = await getEntry(13)
   let formattedEntry = {
     familyName: '',
       personalName: '',

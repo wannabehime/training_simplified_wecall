@@ -18,7 +18,7 @@ const changeEntry = entryStore.changeEntry
   <PageTitle title="入力内容確認画面" message="以下の内容で変更しますか？" />
   <ConfirmationContentDisplay />
 
-  <RouterLinkButton to="/entry/change/complete" @click-event="changeEntry(12, changedProperties)">
+  <RouterLinkButton to="/entry/change/complete" @click-event="changeEntry(13, changedProperties)">
     予約内容を変更する
   </RouterLinkButton>
   <RouterLinkButton to="/entry/change"> 内容を修正する </RouterLinkButton>
