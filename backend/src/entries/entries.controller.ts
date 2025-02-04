@@ -11,24 +11,32 @@ import {
   Post,
 } from '@nestjs/common';
 import { EntryDto } from './dto/entry.dto';
-import { AddEntryDto } from './dto/add-entry.dto';
 import { UpdateEntryDto } from './dto/update-entry.dto';
+import { Entry } from '@prisma/client';
 
 @Controller('entries')
 export class EntriesController {
   constructor(private entriesService: EntriesService) {}
 
   @Get(':id')
-  async getEntry(@Param('id', ParseIntPipe) id: number): Promise<EntryDto> {
+  async getEntry(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<Omit<Entry, 'id' | 'checkInTime'>> {
     const returnedData = await this.entriesService.getEntry(id);
     if (returnedData === null) {
       throw new NotFoundException(`Entry with ID ${id} not found`);
     }
+    console.log(returnedData);
     return returnedData;
   }
 
   @Post()
-  async addEntry(@Body() entry: AddEntryDto): Promise<EntryDto> {
+  async addEntry(
+    @Body() entry: EntryDto,
+  ): Promise<Omit<Entry, 'id' | 'checkInTime'>> {
+    console.log(entry);
+    console.log(typeof entry.visitDay);
+    // entry.visitDay.getDate();
     return await this.entriesService.addEntry(entry);
   }
 

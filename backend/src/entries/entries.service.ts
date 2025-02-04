@@ -1,15 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { EntryDto } from './dto/entry.dto';
-import { AddEntryDto } from './dto/add-entry.dto';
 import { UpdateEntryDto } from './dto/update-entry.dto';
+import { Entry } from '@prisma/client';
 
 @Injectable()
 export class EntriesService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getEntry(id: number): Promise<EntryDto | null> {
-    return this.prisma.entries.findUnique({
+  async getEntry(
+    id: number,
+  ): Promise<Omit<Entry, 'id' | 'checkInTime'> | null> {
+    return this.prisma.entry.findUnique({
       where: { id },
       select: {
         familyName: true,
@@ -28,7 +30,6 @@ export class EntriesService {
     });
   }
 
-  async addEntry(entry: AddEntryDto): Promise<EntryDto> {
     let isAccompaniedBoolean = true;
     if (entry.isAccompanied === 'なし') {
       isAccompaniedBoolean = false;
@@ -49,14 +50,18 @@ export class EntriesService {
     };
 
     return this.prisma.entries.create({ data });
+  async addEntry(entry: EntryDto): Promise<Omit<Entry, 'id' | 'checkInTime'>> {
   }
 
-  async updateEntry(id: number, entry: UpdateEntryDto): Promise<EntryDto> {
     let isAccompaniedBoolean = true;
     if (entry.isAccompanied === 'なし') {
       isAccompaniedBoolean = false;
     }
     return this.prisma.entries.update({
+  async updateEntry(
+    id: number,
+    entry: UpdateEntryDto,
+  ): Promise<Omit<Entry, 'id' | 'checkInTime'>> {
       where: { id },
       data: {
         isAccompanied: isAccompaniedBoolean,
@@ -66,8 +71,8 @@ export class EntriesService {
     });
   }
 
-  async deleteEntry(id: number): Promise<EntryDto> {
-    return this.prisma.entries.delete({
+  async deleteEntry(id: number): Promise<Omit<Entry, 'id' | 'checkInTime'>> {
+    return this.prisma.entry.delete({
       where: { id },
     });
   }
