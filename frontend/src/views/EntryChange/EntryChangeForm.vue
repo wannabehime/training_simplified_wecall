@@ -5,23 +5,23 @@ import CalendarDateField from '@/components/fields/Calendar/CalendarDateField.vu
 import CalendarTimeField from '@/components/fields/Calendar/CalendarTimeField.vue'
 import RouterLinkButton from '@/components/atoms/Button/RouterLinkButton.vue'
 import { useEntryStore } from '@/stores/entryStore'
-import { format, parse } from 'date-fns'
-import { ja } from 'date-fns/locale'
+import { ref, computed } from 'vue'
 
-const { entryData, saveEntryToStore } = useEntryStore()
-const parsedDate = parse(entryData.visitDay, 'yyyy年M月d日(EEE)', new Date(), { locale: ja })
-const changedEntry = {
-  ...entryData,
-  visitDay: format(parsedDate, 'yyyy-MM-dd'),
-}
+const { entryData, saveEntryToStore, convertEntryToString, convertInputToEntry } = useEntryStore()
+const input = ref<InputEntry>({
+  ...convertEntryToString(entryData),
+})
+const changedEntry = computed(() => {
+  return convertInputToEntry(input.value)
+})
 </script>
 
 <template>
   <PageTitle title="日程変更" message="入力内容を変更" />
 
-  <CompanionField v-model="changedEntry.isAccompanied" />
-  <CalendarDateField v-model="changedEntry.visitDay" />
-  <CalendarTimeField v-model="changedEntry.visitTime" />
+  <CompanionField v-model="input.isAccompanied" />
+  <CalendarDateField v-model="input.visitDay" />
+  <CalendarTimeField v-model="input.visitTime" />
 
   <RouterLinkButton to="/entry/change/confirm" @click-event="saveEntryToStore(changedEntry)">
     入力内容確認画面へ
