@@ -16,7 +16,7 @@ export function useEntriesAPI() {
       throw new EntryGetFailure()
     }
 
-    return (await response.json()) as EntryReturnedByAPI
+    return (await response.json()) as Entry
   }
   class EntryAddFailure extends Error {
     constructor() {

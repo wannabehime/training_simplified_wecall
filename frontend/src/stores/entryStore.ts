@@ -1,7 +1,8 @@
-import type { Entry, EntryReturnedByAPI, updatedEntryProperties } from '@/types/entry'
+import type { Entry, StringEntry, UpdatedEntryProperties } from '@/types/entry'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { useEntriesAPI } from '@/composables/useEntriesAPI'
+import { format } from 'date-fns'
 
 const { useGetEntryAPI, useAddEntryAPI, useUpdateEntryAPI, useDeleteEntryAPI } = useEntriesAPI()
 
@@ -12,18 +13,24 @@ export const useEntryStore = defineStore('entry-store', () => {
     familyNameKana: '',
     personalNameKana: '',
     gender: '',
-    birthday: '',
+    birthday: new Date(),
     prefecture: '',
     tel: '',
     email: '',
-    isAccompanied: '',
-    visitDay: '',
+    isAccompanied: true,
+    visitDay: new Date(),
     visitTime: '',
   })
 
   const errorMsg = ref<string>()
 
-  async function getEntry(id: number): Promise<EntryReturnedByAPI | null> {
+  function saveEntryToStore(entry: Entry) {
+    console.log(entry)
+    entryData.value = entry
+    console.log(entryData)
+  }
+
+  async function getEntry(id: number): Promise<Entry | null> {
     try {
       return await useGetEntryAPI(id)
     } catch (error) {
@@ -50,10 +57,6 @@ export const useEntryStore = defineStore('entry-store', () => {
     } catch (error) {
       if (error) errorMsg.value = 'サーバーエラーにより予約できませんでした'
     }
-  }
-
-  function saveEntryToStore(entry: Entry) {
-    entryData.value = entry
   }
 
   async function cancelEntry(id: number) {

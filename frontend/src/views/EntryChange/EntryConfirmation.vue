@@ -4,36 +4,14 @@ import RouterLinkButton from '@/components/atoms/Button/RouterLinkButton.vue'
 import ConfirmationContentDisplay from '@/components/ConfirmationContentDisplay.vue'
 import { onMounted } from 'vue'
 import { useEntryStore } from '@/stores/entryStore'
-import { format } from 'date-fns'
-import { ja } from 'date-fns/locale'
 
 const { getEntry, saveEntryToStore } = useEntryStore()
 
 onMounted(async () => {
-  const registeredEntry = await getEntry(13)
-  let formattedEntry = {
-    familyName: '',
-      personalName: '',
-      familyNameKana: '',
-      personalNameKana: '',
-      gender: '',
-      birthday: '',
-      prefecture: '',
-      tel: '',
-      email: '',
-      isAccompanied: '',
-      visitDay: '',
-      visitTime: '',
-  }
+  const registeredEntry = await getEntry(15)
   if (registeredEntry !== null) {
-    formattedEntry = {
-      ...registeredEntry,
-      birthday: format(registeredEntry.birthday, 'yyyy年MM月dd日'),
-      isAccompanied: registeredEntry.isAccompanied ? 'あり' : 'なし',
-      visitDay: format(registeredEntry.visitDay, 'yyyy年MM月dd日(EEE)', { locale: ja }),
-    }
+    saveEntryToStore(registeredEntry)
   }
-  saveEntryToStore(formattedEntry)
 })
 </script>
 

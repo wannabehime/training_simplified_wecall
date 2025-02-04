@@ -30,44 +30,17 @@ export class EntriesService {
     });
   }
 
-    let isAccompaniedBoolean = true;
-    if (entry.isAccompanied === 'なし') {
-      isAccompaniedBoolean = false;
-    }
-    const data = {
-      familyName: entry.familyName,
-      personalName: entry.personalName,
-      familyNameKana: entry.familyNameKana,
-      personalNameKana: entry.personalNameKana,
-      gender: entry.gender,
-      birthday: new Date(entry.birthday),
-      prefecture: entry.prefecture,
-      tel: entry.tel,
-      email: entry.email,
-      isAccompanied: isAccompaniedBoolean,
-      visitDay: new Date(entry.visitDay),
-      visitTime: entry.visitTime,
-    };
-
-    return this.prisma.entries.create({ data });
   async addEntry(entry: EntryDto): Promise<Omit<Entry, 'id' | 'checkInTime'>> {
+    return this.prisma.entry.create({ data: entry });
   }
 
-    let isAccompaniedBoolean = true;
-    if (entry.isAccompanied === 'なし') {
-      isAccompaniedBoolean = false;
-    }
-    return this.prisma.entries.update({
   async updateEntry(
     id: number,
     entry: UpdateEntryDto,
   ): Promise<Omit<Entry, 'id' | 'checkInTime'>> {
+    return this.prisma.entry.update({
       where: { id },
-      data: {
-        isAccompanied: isAccompaniedBoolean,
-        visitDay: new Date(entry.visitDay),
-        visitTime: entry.visitTime,
-      },
+      data: entry,
     });
   }
 
