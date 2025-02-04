@@ -4,6 +4,8 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 
+const backendUrl = process.env.BACKEND_URL
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [vue(), vueDevTools()],
@@ -15,8 +17,8 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     proxy: {
-      '/api': {
-        target: 'http://backend:3000',
+      '^/api': {
+        target: backendUrl,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
