@@ -3,12 +3,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { useEntriesAPI } from '@/composables/useEntriesAPI'
 
-const {
-  useGetEntryAPI: useGetEntryAPI,
-  useAddEntryAPI: useAddEntryAPI,
-  useUpdateEntryAPI: useUpdateEntryAPI,
-  useDeleteEntryAPI: useDeleteEntryAPI,
-} = useEntriesAPI()
+const { useGetEntryAPI, useAddEntryAPI, useUpdateEntryAPI, useDeleteEntryAPI } = useEntriesAPI()
 
 export const useEntryStore = defineStore('entry-store', () => {
   const entryData = ref<Entry>({
