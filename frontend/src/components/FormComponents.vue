@@ -19,9 +19,7 @@ import { ref, computed } from 'vue'
 
 const { saveEntryToStore, initInput, convertInputToEntry } = useEntryStore()
 const input = ref<StringEntry>(initInput())
-const entry = computed(() => {
-  return convertInputToEntry(input.value)
-})
+const entry = computed(() => convertInputToEntry(input.value))
 </script>
 
 <template>
