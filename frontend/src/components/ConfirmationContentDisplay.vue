@@ -10,14 +10,7 @@ const { entryData } = storeToRefs(useEntryStore())
     <p>お名前</p>
     <p>
       {{
-        entryData.familyName +
-        ' ' +
-        entryData.personalName +
-        '（' +
-        entryData.familyNameKana +
-        ' ' +
-        entryData.personalNameKana +
-        '）'
+        `${entryData.familyName} ${entryData.personalName}（${entryData.familyNameKana} ${entryData.personalNameKana}）`
       }}
     </p>
   </div>
