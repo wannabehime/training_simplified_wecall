@@ -24,6 +24,43 @@ export const useEntryStore = defineStore('entry-store', () => {
 
   const errorMsg = ref<string>()
 
+  function initInput(): StringEntry {
+    return {
+      familyName: '',
+      personalName: '',
+      familyNameKana: '',
+      personalNameKana: '',
+      gender: '',
+      birthday: '',
+      prefecture: '',
+      tel: '',
+      email: '',
+      isAccompanied: '',
+      visitDay: '',
+      visitTime: '',
+    }
+  }
+
+  function convertInputToEntry(input: StringEntry): Entry {
+    console.log(input)
+    console.log(input.birthday)
+    return {
+      ...input,
+      birthday: new Date(input.birthday),
+      isAccompanied: input.isAccompanied === 'あり',
+      visitDay: new Date(input.visitDay),
+    }
+  }
+
+  function convertEntryToString(entry: Entry): StringEntry {
+    return {
+      ...entry,
+      birthday: format(entry.birthday, 'yyyy-MM-dd'),
+      isAccompanied: entry.isAccompanied === true ? 'あり' : 'なし',
+      visitDay: format(entry.visitDay, 'yyyy-MM-dd'),
+    }
+  }
+
   function saveEntryToStore(entry: Entry) {
     console.log(entry)
     entryData.value = entry
@@ -71,6 +108,9 @@ export const useEntryStore = defineStore('entry-store', () => {
 
   return {
     entryData,
+    initInput,
+    convertInputToEntry,
+    convertEntryToString,
     registerEntry,
     saveEntryToStore,
     getEntry,

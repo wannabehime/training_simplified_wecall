@@ -14,50 +14,38 @@ import TermsField from '@/components/fields/Agreement/TermsField.vue'
 import RouterLinkButton from './atoms/Button/RouterLinkButton.vue'
 import NameField from './fields/Name/NameField.vue'
 import NameKanaField from './fields/Name/NameKanaField.vue'
+import type { StringEntry } from '@/types/entry'
+import { ref, computed } from 'vue'
 
-const entryStore = useEntryStore()
-const saveEntryToStore = entryStore.saveEntryToStore
-const entryData = {
-  familyName: '',
-  personalName: '',
-  familyNameKana: '',
-  personalNameKana: '',
-  gender: '',
-  birthday: '',
-  prefecture: '',
-  tel: '',
-  email: '',
-  isAccompanied: '',
-  visitDay: '',
-  visitTime: '',
-}
+const { saveEntryToStore, initInput, convertInputToEntry } = useEntryStore()
+const input = ref<StringEntry>(initInput())
+const entry = computed(() => {
+  return convertInputToEntry(input.value)
+})
 </script>
 
 <template>
-  <NameField
-    v-model:familyName="entryData.familyName"
-    v-model:personalName="entryData.personalName"
-  />
+  <NameField v-model:familyName="input.familyName" v-model:personalName="input.personalName" />
   <NameKanaField
-    v-model:familyNameKana="entryData.familyNameKana"
-    v-model:personalNameKana="entryData.personalNameKana"
+    v-model:familyNameKana="input.familyNameKana"
+    v-model:personalNameKana="input.personalNameKana"
   />
-  <GenderField v-model="entryData.gender" />
-  <BirthdayField v-model="entryData.birthday" />
-  <PrefectureField v-model="entryData.prefecture" />
-  <PhoneField v-model="entryData.tel" />
-  <EmailField v-model="entryData.email" />
+  <GenderField v-model="input.gender" />
+  <BirthdayField v-model="input.birthday" />
+  <PrefectureField v-model="input.prefecture" />
+  <PhoneField v-model="input.tel" />
+  <EmailField v-model="input.email" />
 
   <hr />
 
-  <CompanionField v-model="entryData.isAccompanied" />
-  <CalendarDateField v-model="entryData.visitDay" />
-  <CalendarTimeField v-model="entryData.visitTime" />
+  <CompanionField v-model="input.isAccompanied" />
+  <CalendarDateField v-model="input.visitDay" />
+  <CalendarTimeField v-model="input.visitTime" />
 
   <PrivacyField />
   <TermsField />
 
-  <RouterLinkButton to="/entry/confirm" @click-event="saveEntryToStore(entryData)">
+  <RouterLinkButton to="/entry/confirm" @click-event="saveEntryToStore(entry)">
     入力内容確認画面へ
   </RouterLinkButton>
   <RouterLinkButton to=""> 戻る </RouterLinkButton>
