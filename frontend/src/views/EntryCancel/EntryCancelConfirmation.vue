@@ -7,15 +7,31 @@ import { useEntryStore } from '@/stores/entryStore'
 import { format } from 'date-fns'
 import { ja } from 'date-fns/locale'
 
-const { getEntry, saveEntryToStore, deleteEntryData } = useEntryStore()
+const { getEntry, saveEntryToStore, cancelEntry } = useEntryStore()
 
 onMounted(async () => {
-  const registeredEntry = await getEntry(12)
-  const formattedEntry = {
-    ...registeredEntry,
-    birthday: format(registeredEntry.birthday, 'yyyy年M月d日'),
-    isAccompanied: registeredEntry.isAccompanied ? 'あり' : 'なし',
-    visitDay: format(registeredEntry.visitDay, 'yyyy年M月d日(EEE)', { locale: ja }),
+  const registeredEntry = await getEntry(13)
+  let formattedEntry = {
+    familyName: '',
+      personalName: '',
+      familyNameKana: '',
+      personalNameKana: '',
+      gender: '',
+      birthday: '',
+      prefecture: '',
+      tel: '',
+      email: '',
+      isAccompanied: '',
+      visitDay: '',
+      visitTime: '',
+  }
+  if (registeredEntry !== null) {
+    formattedEntry = {
+      ...registeredEntry,
+      birthday: format(registeredEntry.birthday, 'yyyy年MM月dd日'),
+      isAccompanied: registeredEntry.isAccompanied ? 'あり' : 'なし',
+      visitDay: format(registeredEntry.visitDay, 'yyyy年MM月dd日(EEE)', { locale: ja }),
+    }
   }
   saveEntryToStore(formattedEntry)
 })
@@ -25,7 +41,7 @@ onMounted(async () => {
   <PageTitle title="予約キャンセル" message="以下の内容をキャンセルしますか？" />
   <ConfirmationContentDisplay />
 
-  <RouterLinkButton to="/entry/cancel/complete" @click-event="deleteEntryData()">
+  <RouterLinkButton to="/entry/cancel/complete" @click-event="cancelEntry(13)">
     予約をキャンセルする
   </RouterLinkButton>
   <RouterLinkButton to=""> 閉じる </RouterLinkButton>

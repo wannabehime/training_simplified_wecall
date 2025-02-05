@@ -7,6 +7,7 @@ const {
   useGetEntryAPI: useGetEntryAPI,
   useAddEntryAPI: useAddEntryAPI,
   useUpdateEntryAPI: useUpdateEntryAPI,
+  useDeleteEntryAPI: useDeleteEntryAPI,
 } = useEntriesAPI()
 
 export const useEntryStore = defineStore('entry-store', () => {
@@ -60,19 +61,22 @@ export const useEntryStore = defineStore('entry-store', () => {
     entryData.value = entry
   }
 
-  function deleteEntryData() {
-    entryData.value = {
-      name: '',
-      gender: '',
-      birthday: '',
-      prefecture: '',
-      tel: '',
-      email: '',
-      isAccompanied: '',
-      visitDay: '',
-      visitTime: '',
+  async function cancelEntry(id: number) {
+    try {
+      if ((await useGetEntryAPI(id)) !== null) {
+        await useDeleteEntryAPI(id)
+      }
+    } catch (error) {
+      if (error) errorMsg.value = 'サーバーエラーによりキャンセルできませんでした'
     }
   }
 
-  return { entryData, registerEntry, saveEntryToStore, deleteEntryData, getEntry, changeEntry }
+  return {
+    entryData,
+    registerEntry,
+    saveEntryToStore,
+    getEntry,
+    changeEntry,
+    cancelEntry,
+  }
 })

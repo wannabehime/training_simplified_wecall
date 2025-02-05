@@ -25,7 +25,6 @@ export function useEntriesAPI() {
   }
 
   const useAddEntryAPI = async (entry: Entry) => {
-    // console.log(JSON.stringify(entry))
     const response = await fetch('http://localhost:3000/entries', {
       method: 'POST',
       headers: {
@@ -35,7 +34,6 @@ export function useEntriesAPI() {
     })
 
     if (!response.ok) {
-      // console.log(response)
       throw new EntryAddFailure()
     }
   }
@@ -59,10 +57,26 @@ export function useEntriesAPI() {
       throw new EntryUpdateFailure()
     }
   }
+  class EntryDeleteFailure extends Error {
+    constructor() {
+      super()
+    }
+  }
+
+  const useDeleteEntryAPI = async (id: number) => {
+    const response = await fetch(`http://localhost:3000/entries/${id}`, {
+      method: 'DELETE',
+    })
+
+    if (!response.ok) {
+      throw new EntryDeleteFailure()
+    }
+  }
 
   return {
     useGetEntryAPI,
     useAddEntryAPI,
     useUpdateEntryAPI,
+    useDeleteEntryAPI,
   }
 }
