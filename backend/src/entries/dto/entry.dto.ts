@@ -1,14 +1,63 @@
+import {
+  IsBoolean,
+  IsDateString,
+  IsNotEmpty,
+  IsString,
+  Matches,
+} from 'class-validator';
+
 export class EntryDto {
+  @IsNotEmpty()
+  @IsString()
   familyName: string;
+
+  @IsNotEmpty()
+  @IsString()
   personalName: string;
+
+  @IsNotEmpty()
+  @IsString()
   familyNameKana: string;
+
+  @IsNotEmpty()
+  @IsString()
   personalNameKana: string;
+
+  @IsNotEmpty()
+  @IsString()
   gender: string;
-  birthday: Date;
+
+  @IsNotEmpty()
+  @IsDateString()
+  @Matches(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})\.?\d*Z?$/, {
+    message: 'Date must be in ISO 8601 format (e.g., 2025-02-04T10:00:00Z)',
+  })
+  birthday: string;
+
+  @IsNotEmpty()
+  @IsString()
   prefecture: string;
+
+  @IsNotEmpty()
+  @IsString()
   tel: string;
+
+  @IsNotEmpty()
+  @IsString()
   email: string;
+
+  @IsNotEmpty()
+  @IsBoolean()
   isAccompanied: boolean;
-  visitDay: Date;
+
+  @IsNotEmpty()
+  @IsDateString()
+  @Matches(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})\.?\d*Z?$/, {
+    message: 'Date must be in ISO 8601 format (e.g., 2025-02-04T10:00:00Z)',
+  })
+  visitDay: string;
+
+  @IsNotEmpty()
+  @IsString()
   visitTime: string;
 }
