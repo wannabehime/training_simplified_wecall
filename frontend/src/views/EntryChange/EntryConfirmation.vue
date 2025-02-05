@@ -8,7 +8,7 @@ import { useEntryStore } from '@/stores/entryStore'
 const { getEntry, saveEntryToStore } = useEntryStore()
 
 onMounted(async () => {
-  const registeredEntry = await getEntry(15)
+  const registeredEntry = await getEntry(16)
   if (registeredEntry !== null) {
     saveEntryToStore(registeredEntry)
   }
