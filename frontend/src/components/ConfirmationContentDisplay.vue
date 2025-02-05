@@ -13,10 +13,11 @@ const { entryData } = storeToRefs(useEntryStore())
         entryData.familyName +
         ' ' +
         entryData.personalName +
-        ' ' +
+        '（' +
         entryData.familyNameKana +
         ' ' +
-        entryData.personalNameKana
+        entryData.personalNameKana +
+        '）'
       }}
     </p>
   </div>

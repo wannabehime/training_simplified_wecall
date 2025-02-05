@@ -31,27 +31,27 @@ const routes = [
     component: EntryConfirmation,
   },
   {
-    path: '/entrychange',
+    path: '/entry/change',
     name: 'entry-change-form-view',
     component: EntryChangeForm,
   },
   {
-    path: '/entrychange/confirm',
+    path: '/entry/change/confirm',
     name: 'entry-change-form-confirmation-view',
     component: EntryChangeFormConfirmation,
   },
   {
-    path: '/entrychange/complete',
+    path: '/entry/change/complete',
     name: 'entry-change-form-completion-view',
     component: EntryChangeFormCompletion,
   },
   {
-    path: '/entrycancel/confirm',
+    path: '/entry/cancel/confirm',
     name: 'entry-cancel-confirmation-view',
     component: EntryCancelConfirmation,
   },
   {
-    path: '/entrycancel/complete',
+    path: '/entry/cancel/complete',
     name: 'entry-cancel-completion-view',
     component: EntryCancelCompletion,
   },
