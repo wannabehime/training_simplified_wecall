@@ -1,4 +1,4 @@
-import type { Entry, EntryReturnedByAPI, updatedEntryProperties } from '@/types/entry'
+import type { Entry, UpdatedEntryProperties } from '@/types/entry'
 
 export function useEntriesAPI() {
   class EntryGetFailure extends Error {
@@ -7,8 +7,8 @@ export function useEntriesAPI() {
     }
   }
 
-  const useGetEntryAPI = async (id: number): Promise<EntryReturnedByAPI> => {
-    const response = await fetch(`http://localhost:3000/entries/${id}`, {
+  const useGetEntryAPI = async (id: number): Promise<Entry> => {
+    const response = await fetch(`/api/entries/${id}`, {
       method: 'GET',
     })
 
@@ -25,7 +25,9 @@ export function useEntriesAPI() {
   }
 
   const useAddEntryAPI = async (entry: Entry) => {
-    const response = await fetch('http://localhost:3000/entries', {
+    console.log(entry)
+    console.log(JSON.stringify(entry, null, 2))
+    const response = await fetch('/api/entries', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -44,8 +46,9 @@ export function useEntriesAPI() {
     }
   }
 
-  const useUpdateEntryAPI = async (id: number, properties: updatedEntryProperties) => {
-    const response = await fetch(`http://localhost:3000/entries/${id}`, {
+  const useUpdateEntryAPI = async (id: number, properties: UpdatedEntryProperties) => {
+    console.log(properties)
+    const response = await fetch(`/api/entries/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -64,7 +67,7 @@ export function useEntriesAPI() {
   }
 
   const useDeleteEntryAPI = async (id: number) => {
-    const response = await fetch(`http://localhost:3000/entries/${id}`, {
+    const response = await fetch(`/api/entries/${id}`, {
       method: 'DELETE',
     })
 
