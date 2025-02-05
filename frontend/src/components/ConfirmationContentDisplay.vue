@@ -5,15 +5,17 @@ import { format } from 'date-fns'
 import { ja } from 'date-fns/locale'
 
 const { entryData } = storeToRefs(useEntryStore())
+const name = computed(() => {
+  const entryValue = entryData.value
+  return `${entryValue.familyName} ${entryValue.personalName}（${entryValue.familyNameKana} ${entryValue.personalNameKana}）`
+})
 </script>
 
 <template>
   <div>
     <p>お名前</p>
     <p>
-      {{
-        `${entryData.familyName} ${entryData.personalName}（${entryData.familyNameKana} ${entryData.personalNameKana}）`
-      }}
+      {{ name }}
     </p>
   </div>
   <div>
@@ -22,7 +24,7 @@ const { entryData } = storeToRefs(useEntryStore())
   </div>
   <div>
     <p>生年月日</p>
-    <p>{{ format(entryData.birthday , 'yyyy年M月d日')}}</p>
+    <p>{{ format(entryData.birthday, 'yyyy年M月d日') }}</p>
   </div>
   <div>
     <p>都道府県</p>
