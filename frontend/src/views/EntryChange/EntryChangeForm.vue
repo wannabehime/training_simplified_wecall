@@ -11,9 +11,7 @@ const { entryData, saveEntryToStore, convertEntryToString, convertInputToEntry }
 const input = ref<InputEntry>({
   ...convertEntryToString(entryData),
 })
-const changedEntry = computed(() => {
-  return convertInputToEntry(input.value)
-})
+const changedEntry = computed(() => convertInputToEntry(input.value))
 </script>
 
 <template>
