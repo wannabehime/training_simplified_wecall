@@ -3,17 +3,23 @@ import { useEntryStore } from '@/stores/entryStore'
 import { storeToRefs } from 'pinia'
 import { format } from 'date-fns'
 import { ja } from 'date-fns/locale'
+import {computed} from 'vue'
 
 const { entryData } = storeToRefs(useEntryStore())
+const name = computed(() => {
+  const entryValue = entryData.value
+  return `${entryValue.familyName} ${entryValue.personalName}（${entryValue.familyNameKana} ${entryValue.personalNameKana}）`
+})
+const birthday = computed(() => format(entryData.value.birthday, 'yyyy年M月d日'))
+const isAccompanied = computed(() => entryData.value.isAccompanied === true ? 'あり' : 'なし')
+const visitDay = computed(() => format(entryData.value.visitDay, 'yyyy年M月d日(EEE)', { locale: ja }))
 </script>
 
 <template>
   <div>
     <p>お名前</p>
     <p>
-      {{
-        `${entryData.familyName} ${entryData.personalName}（${entryData.familyNameKana} ${entryData.personalNameKana}）`
-      }}
+      {{ name }}
     </p>
   </div>
   <div>
@@ -22,7 +28,7 @@ const { entryData } = storeToRefs(useEntryStore())
   </div>
   <div>
     <p>生年月日</p>
-    <p>{{ format(entryData.birthday , 'yyyy年M月d日')}}</p>
+    <p>{{ birthday }}</p>
   </div>
   <div>
     <p>都道府県</p>
@@ -38,11 +44,11 @@ const { entryData } = storeToRefs(useEntryStore())
   </div>
   <div>
     <p>同伴者</p>
-    <p>{{ entryData.isAccompanied === true ? 'あり' : 'なし' }}</p>
+    <p>{{ isAccompanied }}</p>
   </div>
   <div>
     <p>来場日</p>
-    <p>{{ format(entryData.visitDay, 'yyyy年M月d日(EEE)', { locale: ja }) }}</p>
+    <p>{{ visitDay }}</p>
   </div>
   <div>
     <p>来場時間</p>
