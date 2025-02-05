@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Entries {
+model Entry {
   id               Int       @id @default(autoincrement())
   familyName       String
   personalName     String
@@ -22,4 +22,6 @@ model Entries {
   visitDay         DateTime  @db.Date
   visitTime        String
   checkInTime      DateTime? @db.Time
+
+  @@map("Entries")
 }

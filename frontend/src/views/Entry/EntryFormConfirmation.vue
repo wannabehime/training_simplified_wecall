@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import ConfirmationContentDisplay from '@/components/ConfirmationContentDisplay.vue';
+import ConfirmationContentDisplay from '@/components/ConfirmationContentDisplay.vue'
 import PageTitle from '@/components/PageTitle.vue'
-import RouterLinkButton from '@/components/atoms/Button/RouterLinkButton.vue';
-import { useEntryStore } from '@/stores/entryStore';
+import RouterLinkButton from '@/components/atoms/Button/RouterLinkButton.vue'
+import { useEntryStore } from '@/stores/entryStore'
 
-const entryStore = useEntryStore()
-const entryData = entryStore.entryData
-const registerEntry = entryStore.registerEntry
+const { entryData, registerEntry } = useEntryStore()
 </script>
 
 <template>

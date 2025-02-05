@@ -19,7 +19,7 @@ onMounted(async () => {
   <PageTitle title="予約キャンセル" message="以下の内容をキャンセルしますか？" />
   <ConfirmationContentDisplay />
 
-  <RouterLinkButton to="/entry/cancel/complete" @click-event="cancelEntry(13)">
+  <RouterLinkButton to="/entry/cancel/complete" @click-event="cancelEntry(15)">
     予約をキャンセルする
   </RouterLinkButton>
   <RouterLinkButton to=""> 閉じる </RouterLinkButton>
