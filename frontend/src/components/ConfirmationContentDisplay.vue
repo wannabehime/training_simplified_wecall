@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useEntryStore } from '@/stores/entryStore'
 import { storeToRefs } from 'pinia'
+import { format } from 'date-fns'
+import { ja } from 'date-fns/locale'
 
 const { entryData } = storeToRefs(useEntryStore())
 </script>
@@ -20,7 +22,7 @@ const { entryData } = storeToRefs(useEntryStore())
   </div>
   <div>
     <p>生年月日</p>
-    <p>{{ entryData.birthday }}</p>
+    <p>{{ format(entryData.birthday , 'yyyy年M月d日')}}</p>
   </div>
   <div>
     <p>都道府県</p>
@@ -36,11 +38,11 @@ const { entryData } = storeToRefs(useEntryStore())
   </div>
   <div>
     <p>同伴者</p>
-    <p>{{ entryData.isAccompanied }}</p>
+    <p>{{ entryData.isAccompanied === true ? 'あり' : 'なし' }}</p>
   </div>
   <div>
     <p>来場日</p>
-    <p>{{ entryData.visitDay }}</p>
+    <p>{{ format(entryData.visitDay, 'yyyy年M月d日(EEE)', { locale: ja }) }}</p>
   </div>
   <div>
     <p>来場時間</p>

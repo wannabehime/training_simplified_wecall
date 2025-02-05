@@ -4,21 +4,6 @@ export interface Entry {
   familyNameKana: string
   personalNameKana: string
   gender: string
-  birthday: string
-  prefecture: string
-  tel: string
-  email: string
-  isAccompanied: string
-  visitDay: string
-  visitTime: string
-}
-
-export interface EntryReturnedByAPI {
-  familyName: string
-  personalName: string
-  familyNameKana: string
-  personalNameKana: string
-  gender: string
   birthday: Date
   prefecture: string
   tel: string
@@ -28,8 +13,15 @@ export interface EntryReturnedByAPI {
   visitTime: string
 }
 
-export interface updatedEntryProperties {
+export type UpdatedEntryProperties = Pick<Entry, 'isAccompanied' | 'visitDay' | 'visitTime'>
+  familyName: string
+  personalName: string
+  familyNameKana: string
+  personalNameKana: string
+  gender: string
+  prefecture: string
+  tel: string
+  email: string
   isAccompanied: string
   visitDay: string
   visitTime: string
-}
