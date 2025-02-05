@@ -36,12 +36,22 @@ export class EntriesController {
   async updateEntry(
     @Param('id', ParseIntPipe) id: number,
     @Body() entry: UpdateEntryDto,
-  ): Promise<EntryDto> {
+  ): Promise<Omit<Entry, 'id' | 'checkInTime'>> {
+    const returnedData = await this.entriesService.getEntry(id);
+    if (returnedData === null) {
+      throw new NotFoundException(`Entry with ID ${id} not found`);
+    }
     return await this.entriesService.updateEntry(id, entry);
   }
 
   @Delete(':id')
-  async deleteEntry(@Param('id', ParseIntPipe) id: number): Promise<EntryDto> {
+  async deleteEntry(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<Omit<Entry, 'id' | 'checkInTime'>> {
+    const returnedData = await this.entriesService.getEntry(id);
+    if (returnedData === null) {
+      throw new NotFoundException(`Entry with ID ${id} not found`);
+    }
     return await this.entriesService.deleteEntry(id);
   }
 }
