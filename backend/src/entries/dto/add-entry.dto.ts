@@ -1,12 +1,52 @@
-import { IsString, IsNotEmpty } from 'class-validator';
-import { BaseEntryDto } from './base-entry-dto';
+import { IsString, IsNotEmpty, IsIn } from 'class-validator';
 
-export class AddEntryDto extends BaseEntryDto {
+export class AddEntryDto {
   @IsNotEmpty()
   @IsString()
-  birthDay: string;
+  familyName: string;
 
   @IsNotEmpty()
   @IsString()
-  visitDate: string;
+  personalName: string;
+
+  @IsNotEmpty()
+  @IsString()
+  familyNameKana: string;
+
+  @IsNotEmpty()
+  @IsString()
+  personalNameKana: string;
+
+  @IsNotEmpty()
+  @IsString()
+  gender: string;
+
+  @IsNotEmpty()
+  @IsString()
+  birthday: string;
+
+  @IsNotEmpty()
+  @IsString()
+  prefecture: string;
+
+  @IsNotEmpty()
+  @IsString()
+  tel: string;
+
+  @IsNotEmpty()
+  @IsString()
+  email: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @IsIn(['あり', 'なし'])
+  isAccompanied: string;
+
+  @IsNotEmpty()
+  @IsString()
+  visitDay: string;
+
+  @IsNotEmpty()
+  @IsString()
+  visitTime: string;
 }

@@ -1,10 +1,16 @@
 import type { Entry } from '@/types/entry'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { useEntriesAPI } from '@/composables/useEntriesAPI'
 
-export const useFormStore = defineStore('form-store', () => {
+const { useAddEntryAPI: useAddEntryAPI } = useEntriesAPI()
+
+export const useEntryStore = defineStore('entry-store', () => {
   const entryData = ref<Entry>({
-    name: '',
+    familyName: '',
+    personalName: '',
+    familyNameKana: '',
+    personalNameKana: '',
     gender: '',
     birthday: '',
     prefecture: '',
@@ -15,9 +21,20 @@ export const useFormStore = defineStore('form-store', () => {
     visitTime: '',
   })
 
-  function saveEntryData(submittedData: Entry) {
-    entryData.value = submittedData
-    // console.log(entryData.value)
+  const errorMsg = ref<string>()
+
+  async function registerEntry(submittedEntry: Entry) {
+    console.log(submittedEntry)
+    try {
+      await useAddEntryAPI(submittedEntry)
+    } catch (error) {
+      if (error) errorMsg.value = 'サーバーエラーにより予約できませんでした'
+      // return null
+    }
+  }
+
+  function saveEntryToStore(entry: Entry) {
+    entryData.value = entry
   }
 
   function deleteEntryData() {
@@ -48,5 +65,5 @@ export const useFormStore = defineStore('form-store', () => {
     }
   }
 
-  return { entryData, saveEntryData, deleteEntryData, getEntryData }
+  return { entryData, registerEntry, saveEntryToStore, deleteEntryData, getEntryData }
 })

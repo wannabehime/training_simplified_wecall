@@ -1,12 +1,14 @@
-import { IsNotEmpty, IsDate } from 'class-validator';
-import { BaseEntryDto } from './base-entry-dto';
-
-export class EntryDto extends BaseEntryDto {
-  @IsNotEmpty()
-  @IsDate()
-  birthDay: Date;
-
-  @IsNotEmpty()
-  @IsDate()
-  visitDate: Date;
+export class EntryDto {
+  familyName: string;
+  personalName: string;
+  familyNameKana: string;
+  personalNameKana: string;
+  gender: string;
+  birthday: Date;
+  prefecture: string;
+  tel: string;
+  email: string;
+  isAccompanied: boolean;
+  visitDay: Date;
+  visitTime: string;
 }
