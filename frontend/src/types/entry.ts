@@ -27,3 +27,9 @@ export interface EntryReturnedByAPI {
   visitDay: Date
   visitTime: string
 }
+
+export interface updatedEntryProperties {
+  isAccompanied: string
+  visitDay: string
+  visitTime: string
+}
