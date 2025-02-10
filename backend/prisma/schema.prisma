@@ -22,6 +22,20 @@ model Entry {
   visitDay         DateTime  @db.Date
   visitTime        String
   checkInTime      DateTime? @db.Time
+  entrySlotId      Int
+  entrySlot        EntrySlot @relation(fields: [entrySlotId], references: [id])
 
   @@map("Entries")
+}
+
+model EntrySlot {
+  id           Int      @id @default(autoincrement())
+  day          DateTime @unique @db.Date
+  time         DateTime @db.Time
+  capacity     Int
+  entry        Int
+  isReservable Boolean
+  Entries      Entry[]
+
+  @@map("EntrySlots")
 }
