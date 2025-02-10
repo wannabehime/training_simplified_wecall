@@ -4,11 +4,14 @@ import RouterLinkButton from '@/components/atoms/Button/RouterLinkButton.vue'
 import ConfirmationContentDisplay from '@/components/ConfirmationContentDisplay.vue'
 import { onMounted } from 'vue'
 import { useEntryStore } from '@/stores/entryStore'
+import { useRoute } from 'vue-router';
 
 const { getEntry, saveEntryToStore } = useEntryStore()
+const route = useRoute();
+const id = Number(route.params.id);
 
 onMounted(async () => {
-  const registeredEntry = await getEntry(16)
+  const registeredEntry = await getEntry(id)
   if (registeredEntry !== null) {
     saveEntryToStore(registeredEntry)
   }

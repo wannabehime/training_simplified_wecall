@@ -26,7 +26,7 @@ const routes = [
     component: EntryFormCompletion,
   },
   {
-    path: '/confirm',
+    path: '/confirm/:id',
     name: 'entry-confirmation-view',
     component: EntryConfirmation,
   },
@@ -46,7 +46,7 @@ const routes = [
     component: EntryChangeFormCompletion,
   },
   {
-    path: '/entry/cancel/confirm',
+    path: '/entry/cancel/confirm/:id',
     name: 'entry-cancel-confirmation-view',
     component: EntryCancelConfirmation,
   },
