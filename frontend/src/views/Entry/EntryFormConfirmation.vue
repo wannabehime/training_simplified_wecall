@@ -3,8 +3,14 @@ import ConfirmationContentDisplay from '@/components/ConfirmationContentDisplay.
 import PageTitle from '@/components/PageTitle.vue'
 import RouterLinkButton from '@/components/atoms/Button/RouterLinkButton.vue'
 import { useEntryStore } from '@/stores/entryStore'
+import Dialogue from '@/components/Dialogue.vue'
+import { ref } from 'vue'
 
 const { entryData, registerEntry } = useEntryStore()
+const isOpenDialogue = ref<boolean>(true)
+const closeDialogue = () => {
+  isOpenDialogue.value = false  
+}
 </script>
 
 <template>
@@ -15,4 +21,6 @@ const { entryData, registerEntry } = useEntryStore()
     予約する
   </RouterLinkButton>
   <RouterLinkButton to="/entry"> 内容を修正する </RouterLinkButton>
+
+  <Dialogue v-if="isOpenDialogue" />
 </template>
