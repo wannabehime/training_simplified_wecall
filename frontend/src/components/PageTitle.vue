@@ -3,8 +3,16 @@ const props = defineProps<{ title: string; message: string }>()
 </script>
 
 <template>
-  <p>GENEROSITY</p>
-  <p>WeCALL サービス体験</p>
-  <p>{{ props.title }}</p>
-  <p>{{ props.message }}</p>
+  <div>
+    <p class="inline-center">GENEROSITY</p>
+    <p class="inline-center">WeCALL サービス体験</p>
+    <p class="inline-center">{{ props.title }}</p>
+    <p class="inline-center">{{ props.message }}</p>
+  </div>
 </template>
+
+<style scoped>
+.inline-center {
+  text-align: center;
+}
+</style>
