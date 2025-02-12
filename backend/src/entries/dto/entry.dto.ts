@@ -1,6 +1,8 @@
 import {
   IsBoolean,
   IsDateString,
+  IsEmail,
+  IsEnum,
   IsNotEmpty,
   IsString,
   Matches,
@@ -44,6 +46,7 @@ export class EntryDto {
 
   @IsNotEmpty()
   @IsString()
+  @IsEmail()
   email: string;
 
   @IsNotEmpty()
