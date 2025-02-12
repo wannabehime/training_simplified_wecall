@@ -20,10 +20,36 @@ import { ref, computed } from 'vue'
 const { saveEntryToStore, initInput, convertInputToEntry } = useEntryStore()
 const input = ref<StringEntry>(initInput())
 const entry = computed(() => convertInputToEntry(input.value))
+
+const isError = ref({
+  familyName: false,
+  personalName: false,
+  familyNameKana: false,
+  personalNameKana: false,
+  gender: false,
+  birthday: false,
+  prefecture: false,
+  tel: false,
+  email: false,
+  isAccompanied: false,
+  visitDay: false,
+  visitTime: false,
+})
+const validateForm = () => {
+  if (input.value.familyName === '') {
+    isError.value.familyName = true
+  }
+
+  return Object.keys(errors.value).length === 0
+}
 </script>
 
 <template>
-  <NameField v-model:familyName="input.familyName" v-model:personalName="input.personalName" />
+  <NameField
+    v-model:familyName="input.familyName"
+    v-model:personalName="input.personalName"
+    :is-empty="isError.familyName"
+  />
   <NameKanaField
     v-model:familyNameKana="input.familyNameKana"
     v-model:personalNameKana="input.personalNameKana"
