@@ -6,6 +6,7 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 
+const liffId = import.meta.env.VITE_LIFF_ID as string
 await liff.init({ liffId: '2006858338-7J5NbWdO', withLoginOnExternalBrowser: true }).then(() => {
   if (window.location.pathname === '/') {
     window.location.href = '/entry'
@@ -15,8 +16,13 @@ await liff.init({ liffId: '2006858338-7J5NbWdO', withLoginOnExternalBrowser: tru
 })
 
 const app = createApp(App)
-
 app.use(createPinia())
 app.use(router)
+
+await liff.init({ liffId: liffId, withLoginOnExternalBrowser: true }).then(() => {
+  if (router.currentRoute.value.path === '/') {
+    router.push('/entry')
+  }
+})
 
 app.mount('#app')
