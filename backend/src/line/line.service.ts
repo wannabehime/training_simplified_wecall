@@ -5,9 +5,9 @@ import { EntryDto } from 'src/entries/dto/entry.dto';
 import { messagingApi } from '@line/bot-sdk';
 
 const { MessagingApiClient } = messagingApi;
+const channelAccessToken = process.env.LINE_CHANNEL_ACCESS_TOKEN as string;
 const client = new MessagingApiClient({
-  channelAccessToken:
-    'eyJhbGciOiJIUzI1NiJ9.M4S6hrDAyzF2lqFFccZQA-dxj2lPl9ITiJ-hB_jn5EVmjlqhP4WhP76jq7u1Gv_6qdZzapXR1PX1If49Kv9o3xKSUyH5vSIy7az_m3QGhwZ0cfnnMAW9XwHvZ4UhsrI1.CnGY3BVXuyTA_ABxagVX9WlHpe0TNPXbG9D5V-hTNS4',
+  channelAccessToken: channelAccessToken,
 });
 
 @Injectable()

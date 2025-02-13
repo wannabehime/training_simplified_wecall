@@ -22,8 +22,8 @@ services:
     volumes:
       - backend_node_modules:/workspace/backend/node_modules
       - .:/workspace
-    environment:
-      DATABASE_URL: mysql://root:${MYSQL_ROOT_PASSWORD}@db:3306/${MYSQL_DATABASE}
+    env_file:
+      - .env
 
   db:
     image: mysql
