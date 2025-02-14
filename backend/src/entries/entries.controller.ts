@@ -41,7 +41,7 @@ export class EntriesController {
     console.log(entry);
     console.log(typeof entry.visitDay);
     // entry.visitDay.getDate();
-    lineService.sendEntryCompletionMessage(userID, entry);
+    // lineService.sendEntryCompletionMessage(userID, entry);
     return await this.entriesService.addEntry(entry);
   }
 
