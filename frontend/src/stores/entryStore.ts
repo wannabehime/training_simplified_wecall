@@ -76,9 +76,9 @@ export const useEntryStore = defineStore('entry-store', () => {
     }
   }
 
-  async function registerEntry(submittedEntry: Entry) {
+  async function registerEntry(submittedEntry: Entry, idToken: string, clientId: string) {
     try {
-      await useAddEntryAPI(submittedEntry)
+      await useAddEntryAPI(submittedEntry, idToken, clientId)
     } catch (error) {
       if (error) errorMsg.value = 'サーバーエラーにより予約できませんでした'
     }
