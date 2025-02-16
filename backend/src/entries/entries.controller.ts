@@ -30,18 +30,17 @@ export class EntriesController {
     if (returnedData === null) {
       throw new NotFoundException(`Entry with ID ${id} not found`);
     }
-    console.log(returnedData);
     return returnedData;
   }
 
   @Post()
   async addEntry(
-    @Body() entry: EntryDto,
+    @Body('entry') entry: EntryDto,
+    @Body('idToken') idToken: string,
+    @Body('clientId') clientId: string,
   ): Promise<Omit<Entry, 'id' | 'checkInTime'>> {
-    console.log(entry);
-    console.log(typeof entry.visitDay);
-    // entry.visitDay.getDate();
-    // lineService.sendEntryCompletionMessage(userID, entry);
+    const userId = await this.lineService.getUserId(idToken, clientId);
+    await this.lineService.sendEntryCompletionMessage(userId, entry);
     return await this.entriesService.addEntry(entry);
   }
 

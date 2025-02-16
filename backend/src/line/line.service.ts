@@ -4,6 +4,8 @@ import { CreateLineDto } from './dto/create-line.dto';
 import { EntryDto } from 'src/entries/dto/entry.dto';
 import { messagingApi } from '@line/bot-sdk';
 import { convertEntryToMessage } from './convertEntryToMessage';
+import { IdTokenVerifiedResponse } from './types/IdTokenVerifiedResponse';
+import { IdTokenVerifiedError } from './types/IdTokenVerifiedError';
 
 const { MessagingApiClient } = messagingApi;
 const channelAccessToken = process.env.LINE_CHANNEL_ACCESS_TOKEN as string;
@@ -13,6 +15,29 @@ const client = new MessagingApiClient({
 
 @Injectable()
 export class LineService {
+  async getUserId(idToken: string, clientId: string): Promise<string> {
+    const response = await fetch('https://api.line.me/oauth2/v2.1/verify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        id_token: idToken,
+        client_id: clientId,
+      }),
+    });
+
+    const data = (await response.json()) as
+      | IdTokenVerifiedResponse
+      | IdTokenVerifiedError;
+
+    if ('sub' in data) {
+      return data.sub;
+    } else {
+      return data.error_description;
+    }
+  }
+
   async sendEntryCompletionMessage(userId: string, entry: EntryDto) {
     await client.pushMessage({
       to: userId,
