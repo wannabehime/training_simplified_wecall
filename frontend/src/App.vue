@@ -1,11 +1,30 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
+import { onMounted } from 'vue'
+import liff from '@line/liff'
+import router from './router'
+import { useLineStore } from './stores/lineStore'
+import { storeToRefs } from 'pinia'
+
+const liffId = import.meta.env.VITE_LIFF_ID as string
+const { idToken: idTokenRef } = storeToRefs(useLineStore())
+
+onMounted(async () =>{
+  await liff.init({ liffId: liffId, withLoginOnExternalBrowser: true })
+
+  if (router.currentRoute.value.path === '/') {
+    router.push('/entry')
+  }
+
+  const idToken = liff.getIDToken()
+  if (idToken !== null) {
+    idTokenRef.value = idToken
+  }
+})
 </script>
 
 <template>
   <RouterView />
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
