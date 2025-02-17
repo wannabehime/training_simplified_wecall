@@ -13,10 +13,14 @@ import {
 import { EntryDto } from './dto/entry.dto';
 import { UpdateEntryDto } from './dto/update-entry.dto';
 import { Entry } from '@prisma/client';
+import { LineService } from '../line/line.service';
 
 @Controller('entries')
 export class EntriesController {
-  constructor(private entriesService: EntriesService) {}
+  constructor(
+    private entriesService: EntriesService,
+    private lineService: LineService,
+  ) {}
 
   @Get(':id')
   async getEntry(
@@ -37,6 +41,7 @@ export class EntriesController {
     console.log(entry);
     console.log(typeof entry.visitDay);
     // entry.visitDay.getDate();
+    // lineService.sendEntryCompletionMessage(userID, entry);
     return await this.entriesService.addEntry(entry);
   }
 

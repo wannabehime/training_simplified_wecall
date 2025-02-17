@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { LineService } from './line.service';
 import { CreateLineDto } from './dto/create-line.dto';
-import { UpdateLineDto } from './dto/update-line.dto';
+// import { UpdateLineDto } from './dto/update-line.dto';
 
 @Controller('line')
 export class LineController {
@@ -30,10 +30,10 @@ export class LineController {
     return this.lineService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLineDto: UpdateLineDto) {
-    return this.lineService.update(+id, updateLineDto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateLineDto: UpdateLineDto) {
+  //   return this.lineService.update(+id, updateLineDto);
+  // }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
