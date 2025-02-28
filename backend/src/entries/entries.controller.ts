@@ -14,6 +14,7 @@ import { EntryDto } from './dto/entry.dto';
 import { UpdateEntryDto } from './dto/update-entry.dto';
 import { Entry } from '@prisma/client';
 import { LineService } from '../line/line.service';
+import { format } from 'date-fns';
 
 @Controller('entries')
 export class EntriesController {
