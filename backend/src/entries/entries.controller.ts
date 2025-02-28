@@ -48,12 +48,26 @@ export class EntriesController {
   @Patch(':id')
   async updateEntry(
     @Param('id', ParseIntPipe) id: number,
-    @Body() entry: UpdateEntryDto,
+    @Body('entry') entry: UpdateEntryDto,
+    @Body('idToken') idToken: string,
+    @Body('clientId') clientId: string,
   ): Promise<Omit<Entry, 'id' | 'checkInTime'>> {
     const returnedData = await this.entriesService.getEntry(id);
     if (returnedData === null) {
       throw new NotFoundException(`Entry with ID ${id} not found`);
     }
+    const updateEntry = {
+      ...returnedData,
+      ...entry,
+      birthday: format(returnedData.birthday, 'yyyy-MM-dd'),
+      // isAccompanied: returnedData.isAccompanied === true ? 'あり' : 'なし',
+      // visitDay: format(returnedData.visitDay, 'yyyy-MM-dd'),
+    };
+    const userId = await this.lineService.getUserId(idToken, clientId);
+    await this.lineService.sendEntryChangeCompletionMessage(
+      userId,
+      updateEntry,
+    );
     return await this.entriesService.updateEntry(id, entry);
   }
 

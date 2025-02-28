@@ -3,7 +3,7 @@ import { CreateLineDto } from './dto/create-line.dto';
 // import { UpdateLineDto } from './dto/update-line.dto';
 import { EntryDto } from 'src/entries/dto/entry.dto';
 import { messagingApi } from '@line/bot-sdk';
-import { convertEntryToMessage } from './convertEntryToMessage';
+import { convertEntryToChangeMessage, convertEntryToMessage } from './convertEntryToMessage';
 import { IdTokenVerifiedResponse } from './types/IdTokenVerifiedResponse';
 import { IdTokenVerifiedError } from './types/IdTokenVerifiedError';
 
@@ -42,6 +42,13 @@ export class LineService {
     await client.pushMessage({
       to: userId,
       messages: [convertEntryToMessage(entry)],
+    });
+  }
+
+  async sendEntryChangeCompletionMessage(userId: string, entry: EntryDto) {
+    await client.pushMessage({
+      to: userId,
+      messages: [convertEntryToChangeMessage(entry)],
     });
   }
 
