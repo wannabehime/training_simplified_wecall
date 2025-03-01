@@ -15,7 +15,10 @@ const client = new MessagingApiClient({
 
 @Injectable()
 export class LineService {
-  async getUserId(idToken: string, clientId: string): Promise<string> {
+  async getProfile(
+    idToken: string,
+    clientId: string,
+  ): Promise<IdTokenVerifiedResponse | IdTokenVerifiedError> {
     const response = await fetch('https://api.line.me/oauth2/v2.1/verify', {
       method: 'POST',
       headers: {
@@ -27,15 +30,9 @@ export class LineService {
       }),
     });
 
-    const data = (await response.json()) as
+    return (await response.json()) as
       | IdTokenVerifiedResponse
       | IdTokenVerifiedError;
-
-    if ('sub' in data) {
-      return data.sub;
-    } else {
-      return data.error_description;
-    }
   }
 
   async sendEntryCompletionMessage(userId: string, entry: EntryDto) {
