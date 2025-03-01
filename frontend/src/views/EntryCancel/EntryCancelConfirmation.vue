@@ -9,7 +9,7 @@ import { useLineStore } from '@/stores/lineStore'
 const { getEntry, saveEntryToStore, cancelEntry } = useEntryStore()
 
 onMounted(async () => {
-  const registeredEntry = await getEntry(15)
+  const registeredEntry = await getEntry(46)
   if (registeredEntry !== null) {
     saveEntryToStore(registeredEntry)
   }
