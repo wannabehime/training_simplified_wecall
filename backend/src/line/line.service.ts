@@ -3,9 +3,10 @@ import { CreateLineDto } from './dto/create-line.dto';
 // import { UpdateLineDto } from './dto/update-line.dto';
 import { EntryDto } from 'src/entries/dto/entry.dto';
 import { messagingApi } from '@line/bot-sdk';
-import { convertEntryToChangeMessage, convertEntryToMessage } from './convertEntryToMessage';
+import { getMessage } from './getMessage';
 import { IdTokenVerifiedResponse } from './types/IdTokenVerifiedResponse';
 import { IdTokenVerifiedError } from './types/IdTokenVerifiedError';
+import { SendMessageParams } from './types/SendMessageParams';
 
 const { MessagingApiClient } = messagingApi;
 const channelAccessToken = process.env.LINE_CHANNEL_ACCESS_TOKEN as string;
@@ -35,17 +36,10 @@ export class LineService {
       | IdTokenVerifiedError;
   }
 
-  async sendEntryCompletionMessage(userId: string, entry: EntryDto) {
+  async sendMessage(params: SendMessageParams) {
     await client.pushMessage({
-      to: userId,
-      messages: [convertEntryToMessage(entry)],
-    });
-  }
-
-  async sendEntryChangeCompletionMessage(userId: string, entry: EntryDto) {
-    await client.pushMessage({
-      to: userId,
-      messages: [convertEntryToChangeMessage(entry)],
+      to: params.userId,
+      messages: [getMessage(params.messageType, params.entry)],
     });
   }
 

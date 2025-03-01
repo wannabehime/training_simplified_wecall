@@ -43,7 +43,11 @@ export class EntriesController {
   ): Promise<Omit<Entry, 'id' | 'checkInTime'>> {
     const response = await this.lineService.getProfile(idToken, clientId);
     if ('sub' in response) {
-      await this.lineService.sendEntryCompletionMessage(response.sub, entry);
+      await this.lineService.sendMessage({
+        userId: response.sub,
+        entry,
+        messageType: 'add',
+      });
     } else {
       throw new UnauthorizedException('Failed in getting userID');
     }
@@ -62,28 +66,44 @@ export class EntriesController {
     if (returnedData === null) {
       throw new NotFoundException(`Entry with ID ${id} not found`);
     }
-    const updateEntry = {
-      ...returnedData,
-      ...entry,
-      birthday: format(returnedData.birthday, 'yyyy-MM-dd'),
-      // isAccompanied: returnedData.isAccompanied === true ? 'あり' : 'なし',
-      // visitDay: format(returnedData.visitDay, 'yyyy-MM-dd'),
-    };
-    const userId = await this.lineService.getUserId(idToken, clientId);
-    await this.lineService.sendEntryChangeCompletionMessage(
-      userId,
-      updateEntry,
-    );
+
+    const response = await this.lineService.getProfile(idToken, clientId);
+    if ('sub' in response) {
+      const updatedEntry = {
+        ...returnedData,
+        ...entry,
+        birthday: format(returnedData.birthday, 'yyyy-MM-dd'),
+      };
+      await this.lineService.sendMessage({
+        userId: response.sub,
+        entry: updatedEntry,
+        messageType: 'change',
+      });
+    } else {
+      throw new UnauthorizedException('Failed in getting userID');
+    }
     return await this.entriesService.updateEntry(id, entry);
   }
 
   @Delete(':id')
   async deleteEntry(
     @Param('id', ParseIntPipe) id: number,
+    @Body('idToken') idToken: string,
+    @Body('clientId') clientId: string,
   ): Promise<Omit<Entry, 'id' | 'checkInTime'>> {
     const returnedData = await this.entriesService.getEntry(id);
     if (returnedData === null) {
       throw new NotFoundException(`Entry with ID ${id} not found`);
+    }
+
+    const response = await this.lineService.getProfile(idToken, clientId);
+    if ('sub' in response) {
+      await this.lineService.sendMessage({
+        userId: response.sub,
+        messageType: 'cancel',
+      });
+    } else {
+      throw new UnauthorizedException('Failed in getting userID');
     }
     return await this.entriesService.deleteEntry(id);
   }
