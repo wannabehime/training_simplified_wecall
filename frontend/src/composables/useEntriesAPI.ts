@@ -44,13 +44,18 @@ export function useEntriesAPI() {
     }
   }
 
-  const useUpdateEntryAPI = async (id: number, properties: UpdatedEntryProperties) => {
+  const useUpdateEntryAPI = async (
+    id: number,
+    properties: UpdatedEntryProperties,
+    idToken: string,
+    clientId: string,
+  ) => {
     const response = await fetch(`/api/entries/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(properties),
+      body: JSON.stringify({ entry: properties, idToken, clientId }),
     })
 
     if (!response.ok) {
@@ -63,9 +68,13 @@ export function useEntriesAPI() {
     }
   }
 
-  const useDeleteEntryAPI = async (id: number) => {
+  const useDeleteEntryAPI = async (id: number, idToken: string, clientId: string) => {
     const response = await fetch(`/api/entries/${id}`, {
       method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ idToken, clientId }),
     })
 
     if (!response.ok) {

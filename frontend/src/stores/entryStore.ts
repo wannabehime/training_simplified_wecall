@@ -84,20 +84,27 @@ export const useEntryStore = defineStore('entry-store', () => {
     }
   }
 
-  async function changeEntry(id: number, changedProperties: UpdatedEntryProperties) {
+  async function changeEntry(
+    id: number,
+    changedProperties: UpdatedEntryProperties,
+    idToken: string,
+    clientId: string,
+  ) {
+    console.log(idToken)
     try {
       if ((await useGetEntryAPI(id)) !== null) {
-        await useUpdateEntryAPI(id, changedProperties)
+        await useUpdateEntryAPI(id, changedProperties, idToken, clientId)
       }
     } catch (error) {
       if (error) errorMsg.value = 'サーバーエラーにより予約を変更できませんでした'
     }
   }
 
-  async function cancelEntry(id: number) {
+  async function cancelEntry(id: number, idToken: string, clientId: string) {
+    console.log(idToken)
     try {
       if ((await useGetEntryAPI(id)) !== null) {
-        await useDeleteEntryAPI(id)
+        await useDeleteEntryAPI(id, idToken, clientId)
       }
     } catch (error) {
       if (error) errorMsg.value = 'サーバーエラーによりキャンセルできませんでした'
