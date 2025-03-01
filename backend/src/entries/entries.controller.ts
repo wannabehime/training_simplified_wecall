@@ -9,6 +9,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { EntryDto } from './dto/entry.dto';
 import { UpdateEntryDto } from './dto/update-entry.dto';
@@ -40,8 +41,13 @@ export class EntriesController {
     @Body('idToken') idToken: string,
     @Body('clientId') clientId: string,
   ): Promise<Omit<Entry, 'id' | 'checkInTime'>> {
-    const userId = await this.lineService.getUserId(idToken, clientId);
-    await this.lineService.sendEntryCompletionMessage(userId, entry);
+    const response = await this.lineService.getProfile(idToken, clientId);
+    if ('sub' in response) {
+      await this.lineService.sendEntryCompletionMessage(response.sub, entry);
+    } else {
+      throw new UnauthorizedException('Failed in getting userID');
+    }
+
     return await this.entriesService.addEntry(entry);
   }
 
