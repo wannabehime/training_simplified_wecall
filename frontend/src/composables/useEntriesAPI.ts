@@ -24,15 +24,13 @@ export function useEntriesAPI() {
     }
   }
 
-  const useAddEntryAPI = async (entry: Entry) => {
-    console.log(entry)
-    console.log(JSON.stringify(entry, null, 2))
+  const useAddEntryAPI = async (entry: Entry, idToken: string, clientId: string) => {
     const response = await fetch('/api/entries', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(entry),
+      body: JSON.stringify({ entry, idToken, clientId }),
     })
 
     if (!response.ok) {
@@ -47,7 +45,6 @@ export function useEntriesAPI() {
   }
 
   const useUpdateEntryAPI = async (id: number, properties: UpdatedEntryProperties) => {
-    console.log(properties)
     const response = await fetch(`/api/entries/${id}`, {
       method: 'PATCH',
       headers: {
