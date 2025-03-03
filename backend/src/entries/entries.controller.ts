@@ -9,12 +9,12 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { EntryDto } from './dto/entry.dto';
 import { UpdateEntryDto } from './dto/update-entry.dto';
 import { Entry } from '@prisma/client';
 import { LineService } from '../line/line.service';
-
 @Controller('entries')
 export class EntriesController {
   constructor(
@@ -30,18 +30,22 @@ export class EntriesController {
     if (returnedData === null) {
       throw new NotFoundException(`Entry with ID ${id} not found`);
     }
-    console.log(returnedData);
     return returnedData;
   }
 
   @Post()
   async addEntry(
-    @Body() entry: EntryDto,
+    @Body('entry') entry: EntryDto,
+    @Body('idToken') idToken: string,
+    @Body('clientId') clientId: string,
   ): Promise<Omit<Entry, 'id' | 'checkInTime'>> {
-    console.log(entry);
-    console.log(typeof entry.visitDay);
-    // entry.visitDay.getDate();
-    // lineService.sendEntryCompletionMessage(userID, entry);
+    const response = await this.lineService.getProfile(idToken, clientId);
+    if ('sub' in response) {
+      await this.lineService.sendEntryCompletionMessage(response.sub, entry);
+    } else {
+      throw new UnauthorizedException('Failed in getting userID');
+    }
+
     return await this.entriesService.addEntry(entry);
   }
 
