@@ -15,6 +15,8 @@ import { EntryDto } from './dto/entry.dto';
 import { UpdateEntryDto } from './dto/update-entry.dto';
 import { Entry } from '@prisma/client';
 import { LineService } from '../line/line.service';
+import { format } from 'date-fns';
+
 @Controller('entries')
 export class EntriesController {
   constructor(
@@ -41,7 +43,11 @@ export class EntriesController {
   ): Promise<Omit<Entry, 'id' | 'checkInTime'>> {
     const response = await this.lineService.getProfile(idToken, clientId);
     if ('sub' in response) {
-      await this.lineService.sendEntryCompletionMessage(response.sub, entry);
+      await this.lineService.sendMessage({
+        userId: response.sub,
+        entry,
+        messageType: 'add',
+      });
     } else {
       throw new UnauthorizedException('Failed in getting userID');
     }
@@ -52,11 +58,29 @@ export class EntriesController {
   @Patch(':id')
   async updateEntry(
     @Param('id', ParseIntPipe) id: number,
-    @Body() entry: UpdateEntryDto,
+    @Body('entry') entry: UpdateEntryDto,
+    @Body('idToken') idToken: string,
+    @Body('clientId') clientId: string,
   ): Promise<Omit<Entry, 'id' | 'checkInTime'>> {
     const returnedData = await this.entriesService.getEntry(id);
     if (returnedData === null) {
       throw new NotFoundException(`Entry with ID ${id} not found`);
+    }
+
+    const response = await this.lineService.getProfile(idToken, clientId);
+    if ('sub' in response) {
+      const updatedEntry = {
+        ...returnedData,
+        ...entry,
+        birthday: format(returnedData.birthday, 'yyyy-MM-dd'),
+      };
+      await this.lineService.sendMessage({
+        userId: response.sub,
+        entry: updatedEntry,
+        messageType: 'change',
+      });
+    } else {
+      throw new UnauthorizedException('Failed in getting userID');
     }
     return await this.entriesService.updateEntry(id, entry);
   }
@@ -64,10 +88,22 @@ export class EntriesController {
   @Delete(':id')
   async deleteEntry(
     @Param('id', ParseIntPipe) id: number,
+    @Body('idToken') idToken: string,
+    @Body('clientId') clientId: string,
   ): Promise<Omit<Entry, 'id' | 'checkInTime'>> {
     const returnedData = await this.entriesService.getEntry(id);
     if (returnedData === null) {
       throw new NotFoundException(`Entry with ID ${id} not found`);
+    }
+
+    const response = await this.lineService.getProfile(idToken, clientId);
+    if ('sub' in response) {
+      await this.lineService.sendMessage({
+        userId: response.sub,
+        messageType: 'cancel',
+      });
+    } else {
+      throw new UnauthorizedException('Failed in getting userID');
     }
     return await this.entriesService.deleteEntry(id);
   }
