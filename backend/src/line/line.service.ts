@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { CreateLineDto } from './dto/create-line.dto';
-// import { UpdateLineDto } from './dto/update-line.dto';
-import { EntryDto } from 'src/entries/dto/entry.dto';
 import { messagingApi } from '@line/bot-sdk';
 import { getMessage } from './getMessage';
 import { IdTokenVerifiedResponse } from './types/IdTokenVerifiedResponse';
